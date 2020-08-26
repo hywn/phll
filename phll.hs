@@ -37,7 +37,8 @@ crc32 :: [Word8] -> Word32
 crc32 bytes = xor 0xffffffff $ foldl crc32helper 0xffffffff bytes
 
 chunk :: String -> [Word8] -> [Word8]
-chunk name bytes = (be32 $ length bytes) ++ (unicode name) ++ bytes ++ (be32 $ fromIntegral $ crc32 bytes)
+chunk name bytes = (be32 $ length bytes) ++ all ++ (be32 $ fromIntegral $ crc32 all)
+	where all = (unicode name) ++ bytes
 
 hdr :: [Word8]
 hdr = unicode "\x89PNG\r\n\x1a\n"
